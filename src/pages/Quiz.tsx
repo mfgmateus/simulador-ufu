@@ -62,7 +62,7 @@ export default function Quiz({ disciplina, questoes, onFinalizar, onVoltar }: Pr
             {questao.imagens.map(img => (
               <img
                 key={img}
-                src={`/images/${img}`}
+                src={`${import.meta.env.BASE_URL}images/${img}`}
                 alt="Figura da questão"
                 className="max-w-full rounded-lg border border-gray-200"
               />

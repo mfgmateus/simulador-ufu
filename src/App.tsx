@@ -17,7 +17,7 @@ export default function App() {
   const [respostas, setRespostas] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    fetch('/questions.json')
+    fetch(`${import.meta.env.BASE_URL}questions.json`)
       .then(r => r.json())
       .then(setQuestoes)
   }, [])

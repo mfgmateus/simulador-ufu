@@ -65,7 +65,7 @@ export default function Resultado({ disciplina, questoes, respostas, onReiniciar
                   {q.imagens.length > 0 && (
                     <div className="mb-4 flex flex-col gap-2">
                       {q.imagens.map(img => (
-                        <img key={img} src={`/images/${img}`} alt="" className="max-w-full rounded-lg border border-gray-200" />
+                        <img key={img} src={`${import.meta.env.BASE_URL}images/${img}`} alt="" className="max-w-full rounded-lg border border-gray-200" />
                       ))}
                     </div>
                   )}
