@@ -263,22 +263,16 @@ def inferir_edicao(nome: str) -> tuple[int, int]:
 def main():
     # Usa apenas Tipo 1 de cada edição (evita duplicatas de Tipo 2, 3, 4)
     # Cadernos com língua estrangeira (Francês) são ignorados pois têm questões diferentes
-    cadernos = sorted(
-        p for p in PDFS_DIR.glob("*.pdf")
-        if "gabarito" not in p.name.lower()
-        and "franc" not in p.name.lower()
-        and "tipo_1" in p.name.lower() or (
-            "caderno" in p.name.lower()
-            and not any(x in p.name.lower() for x in ["tipo_2", "tipo_3", "tipo_4", "franc"])
-        )
-    )
+    def eh_caderno_principal(p: Path) -> bool:
+        n = p.name.lower()
+        if "gabarito" in n or "franc" in n:
+            return False
+        # Prefere tipo_1; aceita cadernos sem numeração de tipo (edições mais antigas)
+        if "tipo_2" in n or "tipo_3" in n or "tipo_4" in n:
+            return False
+        return True
 
-    # Fallback: se não encontrar "tipo_1", pega todos os cadernos não-gabarito
-    if not cadernos:
-        cadernos = sorted(
-            p for p in PDFS_DIR.glob("*.pdf")
-            if "gabarito" not in p.name.lower() and "franc" not in p.name.lower()
-        )
+    cadernos = sorted(p for p in PDFS_DIR.glob("*.pdf") if eh_caderno_principal(p))
 
     gabaritos = sorted(
         p for p in PDFS_DIR.glob("*.pdf")
